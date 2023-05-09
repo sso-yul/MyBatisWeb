@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.earth.heart.dao.BoardDao;
 import com.earth.heart.domain.BoardDTO;
+import com.earth.heart.domain.SearchItem;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/**/root-context.xml")	//DB연동 관련된 정보
@@ -149,7 +150,7 @@ public class BoardDaoImplTest {
 		
 	}
 	
-	@Test
+	//@Test
 	public void insertDummyTestData() throws Exception {
 		boardDao.deleteAll();
 		
@@ -157,6 +158,21 @@ public class BoardDaoImplTest {
 			BoardDTO boardDTO = new BoardDTO("Pioneering_"+i, "ReadyforAction", "earth");
 			boardDao.insert(boardDTO);
 		}
+	}
+	
+	@Test
+	public void searchSelectPageTest() throws Exception {
+		boardDao.deleteAll();
+		
+		for(int i = 1; i <= 20; i++) {
+			BoardDTO boardDTO = new BoardDTO("Pioneering_" + i, "abcd 취업준비" + i, "earth");
+			boardDao.insert(boardDTO);
+		}
+		
+		SearchItem sc = new SearchItem(1, 10, "T", "Pioneering_2");
+		List<BoardDTO> list = boardDao.searchSelectPage(sc);
+		
+		System.out.println("list = " + list);
 	}
 
 }

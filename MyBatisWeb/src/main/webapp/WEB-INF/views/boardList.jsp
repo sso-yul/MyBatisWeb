@@ -6,7 +6,7 @@
 
 <!--loginId에 sessionScope.id가 저장되어 있음  -->
 <c:set var="loginId" value="${sessionScope.id }" />
-<c:set var="loginout" value="${sessionScope.id == null ? 'Login' : 'Logout' }" />
+<c:set var="loginout" value="${sessionScope.id == null ? 'Login' : 'id: '+=loginId }" />
 <c:set var="loginoutlink" value="${sessionScope.id == null ? '/login/login' : '/login/logout' }" />
 
 
@@ -31,12 +31,29 @@
     		color: black;
     	}
     	
+    	button, input {
+	    	border: none;
+	    	outline: none;
+	    }	
+    	
     	.board-container {
     		width: 60%;
-    		height: 1200px;
+    		height: 800px;
     		margin: 0 auto;
     	}
     	
+    	.search-container {
+	    	background-color: rgb(253, 253, 250);
+	    	width: 100%;
+	    	height: 110px;
+	    	border: 1px solid #ddd;
+	    	margin-top: 10px;
+	    	margin-bottom: 30px;
+	    	display: flex;
+	    	justify-content: center;
+	    	align-items: center;
+	    }
+	    
 	    table {
 	    	border-collapse: collapse;
 	    	width: 100%;
@@ -74,6 +91,52 @@
 	    	margin-right: 10px;
 	    }
 	    
+	    .search-form {
+	    	height: 37px;
+	    	display: flex;
+	    }
+	    
+	    .search-option {
+	    	color: gray;
+	    	width: 100px;
+	    	height: 100%;
+	    	outline: none;
+	    	border: 1px solid #ccc;
+	    	margin-right: 5px;
+	    	border-radius: 5px;
+	    }
+	    
+	    .search-input {
+	    	color: gray;
+	    	background-color: white;
+	    	border: 1px solid #ccc;
+	    	font-size: 15px;
+	    	padding: 5px 7px;
+	    	border-radius: 5px;
+	    }
+	    
+	    .search-input::placeholder {
+	    	color: gray;
+	    }
+	    
+	    .search-button {
+	    	width: 19%;
+	    	height: 100%;
+	    	border-radius: 5px;
+	    	display: flex;
+	    	align-items: center;
+	    	justify-content: center;
+	    	font-size: 15px;
+	    	color: #9780ff;
+	    	border: 1px solid #9780ff;
+	    	background-color: transparent;
+	    }
+	    
+	    .search-button:hover {
+	    	background-color: #9780ff;
+	    	color: white;
+	    }
+	    	    
 	    </style>
     
 </head>
@@ -92,9 +155,43 @@
     </ul>
     </div>
     
+    <script type="text/javascript">
+    	//${msg}는 딜리트 에러 또는 딜리트 오케이 둘 중 하나
+    	let msg = "${msg}"
+    	if(msg == "DELETE_OK")
+    		alert("삭제되었습니다.")
+    	if(msg == "DELETE_ERROR")
+    		alert("삭제되었거나 없는 게시물입니다.")	
+    	//글쓰기 ㅇㅋ / ㄴㄴ 메세지
+    	if(msg == "WRITE_OK")
+    		alert("등록되었습니다.")
+    	//수정 완료 메세지
+    	if(msg == "MODE_OK")
+    		alert("수정되었습니다.")
+    </script>
+    
     <div style="text-align: center;">
      	<div class="board-container">
      		<div class="search-container">
+     		<!-- 게시물 찾기 버튼 추가 -->
+     			<!-- ServiceDao Mapper까지 갔다가 보드리스트로 돌아오는 거임 -->
+     			<form action="<c:url value='/board/list' />" class="search-form" method="get">
+     				<!-- 찜목록 정렬에 쓸 수 있을 듯 -->
+     				<!-- '$'{'}'안에 값 option은 PageResolver.java에 이미 다 정의해 놨음 -->
+     				<select class="search-option" name="option">
+     					<option value="A" ${pr.sc.option == 'A' || pr.sc.option == '' ? "selected" : "" }>제목+내용</option>
+     					<option value="T" ${pr.sc.option == 'T' ? "selected" : "" }>제목</option>
+     					<option value="W" ${pr.sc.option == 'W' ? "selected" : "" }>작성자</option>
+     				</select>
+     				<!-- EL안 키워드는 SearchItem의 keyword와 같음. 키워드는 내가 입력한 값이 되어 param(파라미터)으로 넘어감 -->
+     				<input type="text" name="keyword" class="search-input" value="${param.keyword }" placeholder="검색어를 입력하세요" />
+     				<input type="submit" value="검색" class="search-button" />
+     			</form>
+     			
+     		<!-- 글쓰기 버튼 추가 / 버튼 자체에 url이 있으니 form 안에 안 넣어줌 -->
+     			<button id="writeBtn" class="btn-write" onclick="location.href='<c:url value="/board/write" />'">
+     				<i class="fas fa-pencil"></i>글쓰기
+     			</button>
      		
      		</div>
      		

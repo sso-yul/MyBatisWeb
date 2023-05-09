@@ -45,6 +45,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int write(BoardDTO boardDTO) throws Exception {
+		//throw new Exception(); //-> 요거 쓰면 글 작성 등록에 오류 남. 그리고 원래 쓰고 있던 글은 그대로 남아있음(글쓰기 폼 그대로임)
 		return boardDao.insert(boardDTO);
 	}
 

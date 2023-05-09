@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="loginout" value="${sessionScope.id == null ? 'Login' : 'Logout' }" />
+<c:set var="loginId" value="${sessionScope.id }" />
+<c:set var="loginout" value="${sessionScope.id == null ? 'Login' : 'id: '+=loginId  }" />
 <c:set var="loginoutlink" value="${sessionScope.id == null ? '/login/login' : '/login/logout' }" />
 
 <!DOCTYPE html>
@@ -17,6 +18,8 @@
     <title>earth</title>
 </head>
 <body>
+
+
     <div id="menu">
     <ul>
     	<li id="logo">earth</li>
@@ -28,9 +31,7 @@
     </ul>
     </div>
     <div style="text-align: center;">
-    	<h1>세상을 바꾸는 HOME</h1>
-    	<h1>다음 세대에게 더 나은 세상을</h1>
-    	<h1>지구를 사랑하는 마음</h1>
+
     </div>
 </body>
 </html>

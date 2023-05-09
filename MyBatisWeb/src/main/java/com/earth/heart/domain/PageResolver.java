@@ -6,7 +6,6 @@ public class PageResolver {
 	
 	private SearchItem sc;
 	
-	
 	private int totalCnt;				//게시물의 총 개수
 	private int pageSize;				//한 페이지 당 지정된 게시물 개수
 	private final int NAV_SIZE = 10;	//페이지 내비게이션 사이즈

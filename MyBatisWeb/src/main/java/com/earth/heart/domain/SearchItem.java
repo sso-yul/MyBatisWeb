@@ -2,6 +2,7 @@ package com.earth.heart.domain;
 //검색 기능
 import static java.util.Objects.requireNonNullElse;
 
+
 import org.springframework.web.util.UriComponentsBuilder;
 
 import static java.lang.Math.*;
@@ -15,7 +16,7 @@ public class SearchItem {
 	private Integer page = 1;
 	private Integer pageSize = DEFAULT_PAGE_SIZE;
 	private String keyword = "";
-	private String option = "";
+	private String option = "";						//키워드나 옵션이 없을 때는 전체 게시물 긁어옴
 	
 	public SearchItem() {}
 	
