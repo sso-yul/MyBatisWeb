@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="com.earth.heart.dao.commentMapper">
+	
+	<!-- 특정 게시물의 댓글을 선택하는 select문 추가, 파라미터는 bno가 됨(bno가 파라미터 타입). (n번의 댓글), resultType은 루트 컨텍스트의 해당 alias가 된다 -->
+	<select id="selectAll" parameterType="int" resultType="CommentDTO">
+		SELECT cno, bno, recmt, comment, commenter, reg_date, up_date
+		FROM t_comment
+		where bno = #{bno}
+		order by reg_date, cno
+	</select>
+	
+	<!-- 특정 게시글의 댓글 모두 삭제 / bno 가 파라미터 타입이니 int. -->	
+	<delete id="deleteAll" parameterType="int" >
+		DELETE FROM t_comment
+		WHERE bno = #{bno}
+	</delete>
+	
+	<!-- 한 게시글에서 댓글 단 사람이 댓글 삭제할 수 있게 함 파라미터 타입, int와 string이 오니 map 방식으로 함(hashMap)-->
+	<delete id="delete" parameterType="map">
+		DELETE FROM t_comment
+		WHERE cno = #{cno} AND commenter = #{commenter}
+	</delete>
+	
+	<!-- 댓글 추가 sql 파라미터 타입은 CommentDTO가 된다-->
+	<insert id="insert" parameterType="CommentDTO">
+		INSERT INTO t_comment
+		(bno, recmt, comment, commenter, reg_date, up_date)
+		VALUES(#{bno}, #{recmt}, #{comment}, #{commenter}, now(), now())
+	</insert>
+	
+	<!-- 업데이트 / 특정 댓글 & 작성자가 일치할 시 내용 수정 후 업데이트. 필요한 부분만 넣어줌-->
+	<update id="update" parameterType="CommentDTO">
+		UPDATE t_comment
+		SET comment = #{comment}, up_date = now()
+		WHERE cno = #{cno} AND commenter = #{commenter}
+	</update>
+	
+</mapper>
