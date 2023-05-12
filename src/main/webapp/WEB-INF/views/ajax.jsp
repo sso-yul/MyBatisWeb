@@ -10,6 +10,8 @@
     <title>ajax</title>
 </head>
 <body>
+	
+	<!-- 화면단에서 요청함 -->
 	<h2>{name : "earth", age : 10}</h2>
 	<!-- 서버로 위의 h2부분 데이터 보내는 부분(SEND버튼)은 자바스크립트로 처리 -->
 	<button id="sendBtn" type="button">SEND</button>
@@ -17,7 +19,7 @@
 	<h2>Data from Server: </h2>
 	<div id="data"></div>
 	
-	<!-- ajax.jsp가 로드 되면 밑의 자바 스크립트는 무조건 실행된다(ready함수니까) -->
+	<!-- ajax.jsp가 로드 되면 밑의 자바 스크립트는 무조건 실행된다(ready함수니까) - 이벤트 -->
 	<script type="text/javascript">
 		$(document).ready(function() {
 			//json 객체 생성->person. 이렇게 선언을 하면 key value형태로 브라우저 상에 만들어짐

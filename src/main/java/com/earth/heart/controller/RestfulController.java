@@ -31,4 +31,12 @@ public class RestfulController {
 		p.setAge(p.getAge() + 2023);
 		return p;
 	}
+	
+	//처음 화면 요청 - test
+	@GetMapping("/test")
+	public String test() {
+		return "test";		//page(view) jsp
+	}
+	
+	
 }

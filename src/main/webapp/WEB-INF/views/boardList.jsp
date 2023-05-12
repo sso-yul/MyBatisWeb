@@ -60,6 +60,7 @@
 	    	border-top: 2px solid #9780ff;
 	    }
 	    
+	    <!-- 짝수 색깔 -->
 	    tr:nth-child(even) {
 			background-color: #f0f0f070;
 		}
@@ -139,8 +140,7 @@
 	    }
 	    
 	    .btn-write {
-	    	background-color: rgb(236,236,236);
-	    	border: none;
+	    	background-color: rgb(223, 213, 242);
 	    	color: black;
 	    	padding: 6px 12px;
 	    	font-size: 16px;

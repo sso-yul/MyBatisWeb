@@ -93,4 +93,21 @@ public class BoardDaoImpl implements BoardDao{
 		return session.selectList(namespace + "searchSelectPage", sc);
 	}
 
+	@Override
+	public int updateCommentCnt(Integer bno, int cnt) throws Exception {
+		//댓글 1개 달 때마다 댓글 카운트 올라감
+		//dao를 상속해야함
+		//파라미터 안에 두 가지 정보를 Map을 만들어 넘김
+		Map map = new HashMap();
+		map.put("cnt", cnt);
+		//어떤 게시글이냐
+		map.put("bno", bno);
+		
+		return session.update(namespace + "updateCommentCnt", map);
+		//이 정보를 받아서 매퍼에서 쿼리문 Cnt 실행해서 정보 넘겨주면 됨 (보드매퍼에서)
+		
+		//강제 예외 발생
+		//throw new Exception("transaction exception");
+	}
+
 }

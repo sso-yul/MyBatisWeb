@@ -33,5 +33,8 @@ public interface BoardDao {
 	int searchResultCnt(SearchItem sc) throws Exception;
 	
 	List<BoardDTO> searchSelectPage(SearchItem sc) throws Exception;
+
+	//CommentServiceImpl과 연관 있음
+	int updateCommentCnt(Integer bno, int cnt) throws Exception;
  
 }

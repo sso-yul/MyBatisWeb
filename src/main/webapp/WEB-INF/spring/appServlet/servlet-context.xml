@@ -23,8 +23,7 @@
 	
 	<context:component-scan base-package="com.earth.heart" />
 	
-	<beans:bean id="messageSource"
-		class="org.springframework.context.support.ResourceBundleMessageSource">
+	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<beans:property name="basenames">
 			<beans:list>
 				<beans:value>error_message</beans:value>

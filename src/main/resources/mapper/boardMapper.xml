@@ -46,7 +46,7 @@
 		limit #{pageSize} offset #{offset}
 	</select>
 		
-	<!-- test 안에 옵션이 T(제목)W(작성자)A(제목+내용인 경우 -->
+	<!-- test 안에 옵션이 T(제목)W(작성자)A(제목+내용)인 경우 -->
 	<sql id="searchCondition">
 		<choose>
 			<when test='option=="T"'>
@@ -100,6 +100,13 @@
 	<update id="increaseViewCnt" parameterType="int">
 		update t_board 
 		set view_cnt  = view_cnt + 1
+		where bno = #{bno}
+	</update>
+	
+	<!-- 댓글 작성 시 개수만큼 댓글 카운트 올라감 -->
+	<update id="updateCommentCnt" parameterType="map">
+		update t_board 
+		set comment_cnt = comment_cnt + #{cnt}
 		where bno = #{bno}
 	</update>
 	
