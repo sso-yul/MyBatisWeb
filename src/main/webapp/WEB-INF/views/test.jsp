@@ -28,6 +28,35 @@
 				//그리고 위의 함수 호출. bno는 정의된 것으로 넘어간다
 				showList(bno)
 			})
+			
+			//삭제 이벤트
+//			$(".delBtn").click(function() {	//화면 실행해봅면 [send] 버튼클릭하고 나서 [삭제]버튼 보임 -> 이벤트 비활성화, 위치 잘 받아야 한다 여기 있으면 안 돼... send가 있는 곳에 있어야 함. commentList로 들어가야 한당
+			$("#commentList").on("click", ".delBtn", function() {
+				//alert("삭제 버튼 클릭됨") 요건 작동하나 확인해보려고 넣은 거
+				//아래는 하나 지정해서 해당 댓글만 삭제되게 하는 방법
+				//cno로 구분할 수 있음 cno의 부모는 bno
+				//부모bno태그로 접근해서 자식cno으로 가야 함
+				//이 부모의 attribute
+				let con = $(this).parent().attr("data-cno")		//공통으로 리턴되어지는 건 <li> 태그. <li> 태르는 buttom의 부모격에 해당
+				let con = $(this).parent().attr("data-bno")		
+				
+				//비동기 처리
+				$.ajac({	오쳥 매서느
+					type: 'DELETE',
+					url: '/heart/' + cno + '?bno=' + bno,	//여기까지가 restFul API적용됨 bno를 겟요청하고 뭐리스트링으로 넘겨주고 요청 uri가 됨
+					success: function(resulut) {	//성공 시
+						//서버로부터 응답이 도착하면 호출될 함수
+						//result는 서버가 전송한 데이터이다
+						alert(result)
+						//지우고나면 나머지 댓글도 다시 읽어야 함 아래 참고
+						showList(bno)
+					},
+					error: function() {alert("error")}	//에러 발생 시 호출 함수							
+					
+				})
+				
+			}
+			}) 
 		})
 
 
@@ -46,7 +75,8 @@
 				tmp += ' data-recmt='	+ comment.recmt
 				tmp += ' data-bno='		+ comment.bno + '>'
 				tmp += ' comment=<span class="comment">'		+ comment.comment + '</span>'
-				tmp += ' commenter=<span class="commenter">'	+ comment.commenter + '</span>'					
+				tmp += ' commenter=<span class="commenter">'	+ comment.commenter + '</span>'
+				tmp += ' <button class="delBtn">삭제</button>'
 				tmp += '</li>'
 			})
 			return tmp + "</ul>";

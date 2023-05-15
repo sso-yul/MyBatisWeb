@@ -2,6 +2,8 @@ package com.earth.heart.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,15 @@ public class CommentController {
 	
 	@Autowired
 	CommentService service;
+	
+	//댓글이 된 DTO가 타입이 되어야 함
+	//해당 댓글 삭제 
+	//ID 저장을 session에 해놓으니 세선도 가져옴(아이디 확인해서 작성자만 삭제가능하게 해야하니까)
+	public ResponseEntity<String> remove(Integer cno, Integer bno, HttpSession session) {
+		String commenter = (String)session.getAttribute("id");
+		
+		return new ResponseEntity<>("DELETE_OK", HttpStatus.OK);		//~20230515, 리턴타입까지만 했음
+	}
 		
 	//댓글은 목록이니 List
 	//지정된 게시물의 모든 댓글을 가져오는 메서드

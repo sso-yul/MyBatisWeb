@@ -103,7 +103,7 @@
 		$(document).ready(function() {
 			let bno = $("input[name=bno]").val()		//인풋 태그 안에 속성(네임)의 값(bno)의 value(.val())를 bno에 저장
 			
-//			$("#listBtn").on("click", function() {		//listBtn에 on(지금은 클릭) 이벤트가 발생했을 때 이런 펑션(함수)이 실행됨
+//			$("#listBtn").on("click", function() {		//listBtn에 on(지금은 클릭) 이벤트가 발생했을 때 이런 펑션(함수)가 실행됨
 //				alert("listBtn clicked")
 //			})
 			$("#listBtn").on("click", function() {
@@ -170,7 +170,41 @@
 					form.submit()
 				}	//여기까지 오면 BoardController의 modify로 이동해서 처리됨
 			})
-
+			
+			//게시글 들어갔을 때 댓글 바로 보이기
+			let showList = function(bno) {
+				//jQuery.ajax() -> $.ajax()
+	    		//읽어오는 메서드(댓글 로드)
+				$.ajax({
+	    			type : 'GET',								//요청 메서드
+	    			url : '/heart/comments?bno='+bno,			//요청 URI, http://localhost/heart/comments?bno=8
+	    			success : function(result) {				//성공 시에 호출, 댓글 결과. 여기서 잘 ... 출력해주면 됨 위의 <div id="commentList"></div>여기다가
+						$("#commentList").html(toHtml(result))	//result = 서버가 전송한 데이터. 나오는지 테스트 해봐야 한다
+					},
+					error : function() {alert("error")}			//정상실행 안 됐을 때 경고창으로 확인 가능하게 넣어야 함
+		   		})
+    		}
+			
+			//위의 toHtml쓰기 위해 test.jsp에서 가져옴
+			let toHtml = function(comments) {
+				//댓글 목록을 ul, li로 표현할 것이다
+				let tmp = "<ul style='display: block; border-collapse: collapse;'>"
+				//li는 foreach문으로 작성해야 한다왜냐면... 반복 되잖아
+				//파라미터는 일단 comment로 정의. 댓글 하나하나니까
+				comments.forEach(function(comment) {
+					//밖에서 큰따옴 썼으니까 안에서는 작은따옴쓴다
+					//comment.cno -> 하나하나의 cno
+					tmp += '<li data-cno='	+ comment.cno
+					tmp += ' data-recmt='	+ comment.recmt
+					tmp += ' data-bno='		+ comment.bno + '>'
+					tmp += ' comment=<span class="comment">'		+ comment.comment + '</span>'
+					tmp += ' commenter=<span class="commenter">'	+ comment.commenter + '</span>'
+					tmp += ' <button class="delBtn">삭제</button>'
+					tmp += '</li>'
+				})
+				return tmp + "</ul>";
+			}
+			showList(bno)
 		})
 	</script>
 	
@@ -214,6 +248,12 @@
 		
 		<button type="button" id="sendBtn">SEND</button>
 		<button type="button" id="modBtn">수정하기</button>
+		<!-- 댓글 여기에 출력 -->
+		<!-- 댓글 자체가 바로 츌력이 되게 해주면 되는데 이걸 test.jsp에서 showList로 정리 해놨음(이벤트 클릭 시 쇼 리스트) -->
+		<!-- 근데 이건 클릭 시 이벤트 발생하는 거고(onclick) 여기서는 그냥 페이지 들어갔을 때 자동으로(ready) 보이는 거 -->
+		<div id="commentList">
+		
+		</div>
 	</div>
 </body>
 </html>
