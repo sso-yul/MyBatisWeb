@@ -306,6 +306,30 @@
 	</script>
 	
 	<script type="text/javascript">
+	  var ws = new WebSocket("ws://localhost:/");
+	
+	  ws.onopen = function () {
+	      console.log('Info: connection opened.');
+	      setTimeout( function(){ connect(); }, 1000); // retry connection!!
+	  };
+	
+	  ws.onmessage = function (event) {
+	      console.log(event.data+'\n');
+	  };
+	
+	  ws.onclose = function (event) { console.log('Info: connection closed.'); };
+	  ws.onerror = function (err) { console.log('Info: Error:',err); };
+	  
+	  $('#insertBtn').on('click', function(evt) {
+	 	evt.preventDefault();
+		if (socket.readyState !== 1) return;
+	  	  let msg = $('input#msg').val();
+	  	  ws.send(msg);
+	  });
+
+	</script>
+	
+	<script type="text/javascript">
 		//게시물 등록 실패
 		let msg = "${msg}"
 		if(msg == "WRITE_ERROR")

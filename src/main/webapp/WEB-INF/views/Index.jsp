@@ -19,7 +19,6 @@
 </head>
 <body>
 
-
     <div id="menu">
     <ul>
     	<li id="logo">earth</li>
@@ -33,5 +32,6 @@
     <div style="text-align: center;">
 
     </div>
+    
 </body>
 </html>
