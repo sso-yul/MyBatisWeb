@@ -172,5 +172,41 @@
 		}
 
     </script>
+    
+    <script type="text/javascript">
+
+	$(document).ready(function() {
+		$('#sendBtn').on('click', function(evt) {
+		 	evt.preventDefault();
+			if (socket.readyState !== 1) return;
+		  	  let msg = $('input#msg').val();
+		  	  socket.send(msg);
+	    });
+		connect();
+	})
+	
+	var socket = null;
+	function connect() {
+		var ws = new WebSocket("ws://localhost/ottt/replyEcho");
+		//var ws = new WebSocket("ws://localhost:80/ottt/replyEcho");
+		socket = ws;
+		 
+		ws.onopen = function () {
+		    console.log('Info: connection opened.');
+		};
+		
+		ws.onmessage = function (event) {
+		    console.log(event.data+'\n');
+		};
+		
+		ws.onclose = function (event) {
+			console.log('Info: connection closed.');
+			//setTimeout( function(){ connect(); }, 1000); // 연결이 끊겼다면 retry connection!!
+		};
+		ws.onerror = function (err) { console.log('Info: Error:',err); };
+	}
+	
+
+</script>
 </body>
 </html>

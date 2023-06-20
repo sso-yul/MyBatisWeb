@@ -13,10 +13,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-     	<meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.1/css/all.min.css">
     <link rel="stylesheet" href="<c:url value='/resources/css/menu.css' />" /> 
     
@@ -195,6 +192,8 @@
 					error: function(error) {alert("error")}				//에러 발생 시 호출될 함수
 				})
 			})
+					
+			
 			
 			//해당 댓글 삭제 기능
 			$("#commentList").on("click", ".delBtn", function() {
@@ -306,30 +305,6 @@
 	</script>
 	
 	<script type="text/javascript">
-	  var ws = new WebSocket("ws://localhost:/");
-	
-	  ws.onopen = function () {
-	      console.log('Info: connection opened.');
-	      setTimeout( function(){ connect(); }, 1000); // retry connection!!
-	  };
-	
-	  ws.onmessage = function (event) {
-	      console.log(event.data+'\n');
-	  };
-	
-	  ws.onclose = function (event) { console.log('Info: connection closed.'); };
-	  ws.onerror = function (err) { console.log('Info: Error:',err); };
-	  
-	  $('#insertBtn').on('click', function(evt) {
-	 	evt.preventDefault();
-		if (socket.readyState !== 1) return;
-	  	  let msg = $('input#msg').val();
-	  	  ws.send(msg);
-	  });
-
-	</script>
-	
-	<script type="text/javascript">
 		//게시물 등록 실패
 		let msg = "${msg}"
 		if(msg == "WRITE_ERROR")
@@ -382,5 +357,6 @@
 		
 		
 	</div>
+
 </body>
 </html>
